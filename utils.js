@@ -1,7 +1,7 @@
 const fs = require('fs')
 const Web3 = require('web3');
 
-const { privateKey, providerURL } = require("./secrets.json")
+const { ownerPrivateKey, providerURL } = require("./secrets.json")
 
 const web3 = new Web3(providerURL)
 
@@ -35,7 +35,7 @@ const readInfo = () => {
 const syncNonceForAccount = async () => {
   console.log("synchronizing nonce...")
   try {
-    const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+    const account = web3.eth.accounts.privateKeyToAccount(ownerPrivateKey)
     const nonce = await web3.eth.getTransactionCount(account.address)
     const info = readInfo()
     saveInfo({...info, nonce})

@@ -1,8 +1,7 @@
-const fs = require('fs')
 const Web3 = require('web3');
 const axios = require('axios')
 
-const { privateKey, providerURL, nodeURL } = require("./secrets.json")
+const { ownerPrivateKey, userPrivateKey, providerURL, nodeURL } = require("./secrets.json")
 const { contractAddress, abi, chainId, maxScanBlockCountForEvents, maxScanBlockCountForFee } = require("./config.json")
 const { logEvent, syncNonceForAccount, readInfo, saveInfo } = require('./utils.js')
 
@@ -44,27 +43,22 @@ const distributeT1Reward = async () => {
 
   console.log("Calling distributeT1Reward")
 
-  const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+  const account = web3.eth.accounts.privateKeyToAccount(userPrivateKey)
   const contract = new web3.eth.Contract(abi, contractAddress)
   const transaction = contract.methods.distributeT1Reward()
   const encodedABI = transaction.encodeABI()
   const estimatedGas = await transaction.estimateGas({from: account.address})
   const gasPrice = await web3.eth.getGasPrice()
 
-  const info = readInfo()
-  const nonce = info.nonce+1
-  saveInfo({...info, nonce})
-
   const options = {
-    // nonce: nonce,
     chainId: chainId.toString(),
     to: transaction._parent._address,
-    gas: estimatedGas * 2,
+    gas: estimatedGas*2,
     gasPrice: gasPrice*2,
     data: encodedABI
   }
 
-  const signed = await web3.eth.accounts.signTransaction(options, privateKey)
+  const signed = await web3.eth.accounts.signTransaction(options, userPrivateKey)
 
   try {
     await web3.eth.sendSignedTransaction(signed.rawTransaction)
@@ -121,19 +115,14 @@ const distributeT2Reward = async (rewardFeeArray, lastBlockNo) => {
   console.log({blockFees})
   console.log({lastBlockNo})
 
-  const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+  const account = web3.eth.accounts.privateKeyToAccount(ownerPrivateKey)
   const contract = new web3.eth.Contract(abi, contractAddress)
   const transaction = contract.methods.distributeT2Reward(blockNos, blockFees, lastBlockNo)
   const encodedABI = transaction.encodeABI()
   const estimatedGas = await transaction.estimateGas({from: account.address})
   const gasPrice = await web3.eth.getGasPrice()
-  
-  const info = readInfo()
-  const nonce = info.nonce+1
-  saveInfo({...info, nonce})
 
   const options = {
-    // nonce: nonce,
     chainId: chainId.toString(),
     to: transaction._parent._address,
     gas: estimatedGas * 2,
@@ -141,7 +130,7 @@ const distributeT2Reward = async (rewardFeeArray, lastBlockNo) => {
     data: encodedABI
   }
 
-  const signed = await web3.eth.accounts.signTransaction(options, privateKey)
+  const signed = await web3.eth.accounts.signTransaction(options, ownerPrivateKey)
 
   try {
     await web3.eth.sendSignedTransaction(signed.rawTransaction)
@@ -225,18 +214,13 @@ const processBurnSurplusCoins = async () => {
 
   console.log(`Calling processBurnSurplusCoins...`)
 
-  const account = web3.eth.accounts.privateKeyToAccount(privateKey)
+  const account = web3.eth.accounts.privateKeyToAccount(userPrivateKey)
   const transaction = contract.methods.burnSurplusCoins()
   const encodedABI = transaction.encodeABI()
   const estimatedGas = await transaction.estimateGas({from: account.address})
   const gasPrice = await web3.eth.getGasPrice()
-  
-  const info = readInfo()
-  const nonce = info.nonce+1
-  saveInfo({...info, nonce})
 
   const options = {
-    // nonce: nonce,
     chainId: chainId.toString(),
     to: transaction._parent._address,
     gas: estimatedGas*2,
@@ -244,7 +228,7 @@ const processBurnSurplusCoins = async () => {
     data: encodedABI
   }
 
-  const signed = await web3.eth.accounts.signTransaction(options, privateKey)
+  const signed = await web3.eth.accounts.signTransaction(options, userPrivateKey)
 
   try {
     await web3.eth.sendSignedTransaction(signed.rawTransaction)
@@ -267,10 +251,10 @@ async function main() {
   await processT1Reward()
 
   // reward distribution for T2 licensors
-  scannedToEnd = false
-  while (scannedToEnd == false) {
-    scannedToEnd = await processT2Reward()
-  }
+  // scannedToEnd = false
+  // while (scannedToEnd == false) {
+  //   scannedToEnd = await processT2Reward()
+  // }
 
   // process surplus coin burning
   await processBurnSurplusCoins()

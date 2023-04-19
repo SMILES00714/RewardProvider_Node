@@ -5,7 +5,7 @@
   "chainId": 1340,
   "gasLimit": 5000000,
   "gasPrice": 100000000,
-  "contractAddress": "0x3b41B15f03ff9620B1Ff6Ca5c20938800B208fd4",
+  "contractAddress": "0xf7DB35B616dd592D1F1e1147ce636Ed835A7A19A",
   "abi": [
     {
       "inputs": [],
