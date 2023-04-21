@@ -118,7 +118,13 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address payable",
+          "internalType": "uint256",
+          "name": "id_",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "address_",
           "type": "address"
         },
@@ -167,7 +173,13 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address payable",
+          "internalType": "uint256",
+          "name": "id_",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "address_",
           "type": "address"
         },
@@ -198,7 +210,13 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address payable",
+          "internalType": "uint256",
+          "name": "id_",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "address_",
           "type": "address"
         },
@@ -223,7 +241,13 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address payable",
+          "internalType": "uint256",
+          "name": "id_",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "address_",
           "type": "address"
         },
@@ -279,7 +303,7 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "address payable",
+          "internalType": "address",
           "name": "address_",
           "type": "address"
         },
@@ -483,6 +507,11 @@
         {
           "components": [
             {
+              "internalType": "uint256",
+              "name": "id_",
+              "type": "uint256"
+            },
+            {
               "internalType": "address payable",
               "name": "address_",
               "type": "address"
@@ -518,9 +547,9 @@
               "type": "uint256"
             },
             {
-              "internalType": "address",
-              "name": "nextLicense",
-              "type": "address"
+              "internalType": "uint256",
+              "name": "nextID",
+              "type": "uint256"
             }
           ],
           "internalType": "struct LicenseProvider.T1License[]",
@@ -626,6 +655,72 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserT1Licenses",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id_",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address payable",
+              "name": "address_",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "packID",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "createdTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "rewardTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "status",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "intervalReward",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "remainingAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "nextID",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct LicenseProvider.T1License[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "getWUNEPrice",
       "outputs": [
@@ -687,9 +782,9 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "license",
-          "type": "address"
+          "internalType": "uint256",
+          "name": "licenseID",
+          "type": "uint256"
         },
         {
           "internalType": "uint256",
@@ -889,6 +984,49 @@
       "name": "updateWUNEAddress",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userToT1Count",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "userToT1IDs",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
