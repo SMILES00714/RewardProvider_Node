@@ -240,6 +240,10 @@ const processBurnSurplusCoins = async () => {
   }
 }
 
+async function init() {
+  console.log("Starting app...")
+}
+
 async function main() {
   // scan license purchase
   let scannedToEnd = false
@@ -264,7 +268,7 @@ async function main() {
   }, 10000)
 }
 
-syncNonceForAccount()
+init()
   .then(async () => {
     await main()
   })

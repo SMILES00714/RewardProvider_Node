@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /secrets.json
+/info.dat
 
 # misc
 .DS_Store

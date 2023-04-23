@@ -7,7 +7,7 @@ const web3 = new Web3(providerURL)
 
 const defaultInfo = {
   // nonce: 0,
-  lastBlockForReceived: -1
+  lastBlockForEvents: -1
 }
 
 const saveInfo = (info) => {
